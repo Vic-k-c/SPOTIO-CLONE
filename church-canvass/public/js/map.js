@@ -2,10 +2,26 @@
   const DEFAULT_CENTER = [39.8283, -98.5795]; // fallback: center of the US
   const map = L.map('map', { zoomControl: true }).setView(DEFAULT_CENTER, 5);
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  const streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(map);
+  });
+
+  // Esri World Imagery — free satellite/aerial tiles, no API key required.
+  const satelliteLayer = L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    {
+      maxZoom: 19,
+      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics'
+    }
+  );
+
+  streetLayer.addTo(map);
+  L.control.layers(
+    { 'Street': streetLayer, 'Satellite': satelliteLayer },
+    {},
+    { position: 'topright', collapsed: false }
+  ).addTo(map);
 
   const hint = document.getElementById('mapHint');
   let clickMarker = null;
