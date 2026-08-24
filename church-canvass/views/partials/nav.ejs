@@ -1,0 +1,18 @@
+<div class="topnav">
+  <a href="/" class="brand"><span class="flame">&#9679;</span> Canvass</a>
+  <nav>
+    <a href="/" class="<%= active === 'dashboard' ? 'active' : '' %>">Dashboard</a>
+    <a href="/map" class="<%= active === 'map' ? 'active' : '' %>">Map</a>
+    <a href="/board" class="<%= active === 'board' ? 'active' : '' %>">Board</a>
+    <% if (currentUser && currentUser.role === 'admin') { %>
+      <a href="/users" class="<%= active === 'users' ? 'active' : '' %>">Team</a>
+    <% } %>
+  </nav>
+  <div class="userbox">
+    <% if (currentUser) { %>
+      <span><%= currentUser.name %></span>
+      <span class="role-pill"><%= currentUser.role %></span>
+      <a href="/logout">Log out</a>
+    <% } %>
+  </div>
+</div>
